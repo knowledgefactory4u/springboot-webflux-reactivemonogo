@@ -34,9 +34,11 @@ public class UserServiceImpl implements UserService {
     public Mono<User> update(String id, User user) {
 
         return this.userRepository.findById(id)
-            .flatMap(user1 -> {
-                   user.setId(id);
-                   return save(user);
+            .flatMap(u -> {
+                   u.setId(id);
+                   u.setEmailId(user.getEmailId());
+                   u.setName(user.getName());
+                   return save(u);
                      }).switchIfEmpty(Mono.empty());
     }
 
